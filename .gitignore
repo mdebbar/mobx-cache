@@ -1,5 +1,9 @@
 # Mac OS
+*.swp
 .DS_Store
+
+# Compiled files
+lib/
 
 # Logs
 logs
