@@ -81,3 +81,15 @@ test('cache uses the `processData` option', () => {
     )
   })
 })
+
+test('works if omitting the onMiss function', () => {
+  const cache = new MobxCache()
+  expect(cache.get('xyz')).toBeUndefined()
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      expect(cache.get('xyz')).toBeUndefined()
+      resolve()
+    }, 100)
+  })
+})
