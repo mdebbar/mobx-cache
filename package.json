@@ -1,6 +1,6 @@
 {
   "name": "mobx-cache",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An observable data cache with MobX",
   "author": "Mouad Debbar <mouad.debbar@gmail.com>",
   "main": "lib/mobx-cache.js",
@@ -20,10 +20,10 @@
     "babel-eslint": "^6.1.2",
     "babel-jest": "^15.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-1": "^6.13.0",
+    "babel-runtime": "^6.11.6",
     "coveralls": "^2.11.12",
     "eslint": "^3.4.0",
     "eslint-plugin-import": "^1.14.0",
@@ -31,7 +31,6 @@
     "rimraf": "^2.5.4"
   },
   "dependencies": {
-    "babel-runtime": "^6.11.6",
     "mobx": "^2.5.1"
   }
 }
