@@ -3,7 +3,7 @@ import { action, asMap, observable } from 'mobx'
 const identityFn = x => x
 
 export default class MobxCache {
-  _status = {};
+  @observable _status = asMap({});
   @observable _cache = asMap({});
 
   defaultOptions = {
@@ -28,15 +28,28 @@ export default class MobxCache {
 
   // Get whatever is in the cache. No server request.
   peek(key) {
+    return {
+      status: this.status(key),
+      value: this.value(key),
+    }
+  }
+
+  // Get the status of a key.
+  status(key) {
+    return this._status.get(key)
+  }
+
+  // Get the value from the cache.
+  value(key) {
     return this._cache.get(key)
   }
 
   _maybeCacheMiss(key) {
-    if (!this._status[key] && typeof this.onMiss === 'function') {
+    if (!this.status(key) && typeof this.onMiss === 'function') {
       // Cache miss!
       const value = this.onMiss(key)
       if (typeof value.then === 'function') {
-        this._status[key] = 'loading'
+        this._updateStatus(key, 'pending')
         value.then(data => this.populate(key, data))
       } else {
         this.populate(key, value)
@@ -46,7 +59,11 @@ export default class MobxCache {
 
   @action populate(key, data) {
     const processData = this.options.processData || identityFn
-    this._status[key] = 'success'
+    this._updateStatus(key, 'success')
     this._cache.set(key, processData(data))
+  }
+
+  @action _updateStatus(key, status) {
+    this._status.set(key, status)
   }
 }
