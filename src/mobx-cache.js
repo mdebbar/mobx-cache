@@ -34,16 +34,19 @@ export default class MobxCache {
   _maybeCacheMiss(key) {
     if (!this._status[key] && typeof this.onMiss === 'function') {
       // Cache miss!
-      this._status[key] = 'loading'
-      this.onMiss(key).then(data => {
-        this._status[key] = 'success'
-        const processData = this.options.processData || identityFn
-        this.populate(key, processData(data))
-      })
+      const value = this.onMiss(key)
+      if (typeof value.then === 'function') {
+        this._status[key] = 'loading'
+        value.then(data => this.populate(key, data))
+      } else {
+        this.populate(key, value)
+      }
     }
   }
 
   @action populate(key, data) {
-    this._cache.set(key, data)
+    const processData = this.options.processData || identityFn
+    this._status[key] = 'success'
+    this._cache.set(key, processData(data))
   }
 }
