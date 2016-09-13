@@ -1,6 +1,6 @@
 {
   "name": "mobx-cache",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An observable data cache with MobX",
   "author": "Mouad Debbar <mouad.debbar@gmail.com>",
   "main": "lib/mobx-cache.js",
